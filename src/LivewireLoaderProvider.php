@@ -28,6 +28,10 @@ class LivewireLoaderProvider extends ServiceProvider
         Blade::directive('livewireLoaderScripts', function () {
             return '<script src="' . asset("/vendor/livewire-loader/loader.js") . '"></script>';
         });
+		
+		Blade::directive('livewireLoaderStyles', function () {
+            return '<link href="' . asset("/vendor/livewire-loader/loader.css") .'" rel="stylesheet" />';
+        });
     }
 
     private function registerPublishables(): void
@@ -35,11 +39,10 @@ class LivewireLoaderProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/livewire-loader'),
-            ], 'livewire-loader:views');
+				__DIR__ . '/../resources/js' => public_path('vendor/livewire-loader'),
+				__DIR__ . '/../resources/css' => public_path('vendor/livewire-loader'),
+            ], 'livewire-loader');
 
-            $this->publishes([
-                __DIR__ . '/../resources/js' => public_path('vendor/livewire-loader'),
-            ], 'livewire-loader:scripts');
         }
     }
 
